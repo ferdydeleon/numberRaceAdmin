@@ -57,7 +57,6 @@ import ReportFund from "src/views/reports/ReportsFund";
 import ReportIncome from "src/views/reports/ReportsIncome";
 import ReportDrawFund from "src/views/reports/ReportsDrawFund";
 // import ReportBankerFund from "src/views/reports/ReportsBankerFund";
-
 import ReportBetHistory from "src/views/reports/ReportsBetHistory";
 import ReportPointsHistory from "src/views/reports/ReportsPointsHistory";
 import ReportsCommissionHistory from "src/views/reports/ReportsCommissionHistory";
@@ -90,13 +89,11 @@ const accounting_access = Api.ACCOUNTING_USER.ACCTG.filter(
 );
 // const access_dashboard = parseInt(accounting_access.map((val) => val.view_dashboard)) === 1;
 // const access_histoy_fund = accounting_access.map(val => val.histoy_fund) == 1;
-
 // COMPANY FUND
 const access_create_fund =
   parseInt(accounting_access.map((val) => val.create_fund)) === 1;
 const access_histoy_fund =
   parseInt(accounting_access.map((val) => val.histoy_fund)) === 1;
-
 // FUND MANAGEMENT
 const access_request_points_view =
   parseInt(accounting_access.map((val) => val.request_points_view)) === 1;

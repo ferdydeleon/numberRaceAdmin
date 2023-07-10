@@ -429,11 +429,7 @@ const [listUsername, setlistUsername] = useState([]);
   });
 
   const handleFormSubmitCreateButton = e => {
-    // //console.log('handleFormSubmit: ', form.img_url);
     e.preventDefault();
-    ////console.log("create new Button4")
-    // const formData = new FormData()
-    // formData.append("picture", selectedFile[0])
     var ButtonName = form.button_name;
     let sequenceNo;
     if (form.sequence === "") {

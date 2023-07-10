@@ -17,7 +17,6 @@ import {
   CardContent,
   TextField,
   colors,
-
 } from '@material-ui/core';
 import api from '../../../axios';
 import Api from '../../../Api';
@@ -86,7 +85,6 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-
 const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: Api.table.head,
@@ -145,11 +143,9 @@ const List = () => {
   let star = yyyy + '-' + mm + '-' + dd
   let end = yyyy + '-' + mm + '-' + dd
 
-
   const [startingDate, setStarDate] = useState(star);
   const [endingDate, setEndDate] = useState(end);
   const [search, setSearch] = useState('');
-
 
   const handleChange = event => {
     if (event.target.name === 'startingDate') {
@@ -166,11 +162,9 @@ const List = () => {
     }
   };
 
-
   const handleClickSearch = () => {
     return RequestEvent(search, Count, startingDate, endingDate);
   };
-
 
   const RequestEvent = useCallback(async (search, val, startingDate, endingDate) => {
     setLoading(true);

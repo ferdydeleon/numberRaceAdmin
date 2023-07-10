@@ -1,8 +1,6 @@
 import api from "../axios";
 import Api from "../Api";
 
-
-
 export async function fetchArena() {
     const response = await api
       .get(`${Api.request.URL}/api/v2/Arena`)

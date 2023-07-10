@@ -1,0 +1,425 @@
+import localStorageService from '../src/views/auth/localStorageService';
+import SimpleCrypto from 'simple-crypto-js';
+const secretKey = 'some-unique-key';
+const simpleCrypto = new SimpleCrypto(secretKey);
+const authuser = localStorageService.getItem('auth_user');
+let super_Admin;
+let userid;
+let userName;
+let groupname;
+let confirm;
+let toKen;
+let refreshTokens;
+try {
+  if (authuser === null) {
+  } else {
+    super_Admin = simpleCrypto.decrypt(authuser.nropID);
+    userid = simpleCrypto.decrypt(authuser.diresu);
+    userName = simpleCrypto.decrypt(authuser.emanresu);
+    groupname = simpleCrypto.decrypt(authuser.namegroup);
+    confirm = simpleCrypto.decrypt(authuser.drowssp);
+    toKen = authuser.nekton;
+    refreshTokens = authuser.refreshToken;
+  }
+} catch (authuser) {
+  localStorage.removeItem('auth_user');
+  window.location.href = '/';  /*  console.log('failed'); */
+}
+const Api = {
+  request: {
+    URL: 'http://174.138.18.160:8082',  /* ocbs  dev  174.138.18.160:8000*/ 
+    merchant_id: 2,
+    superAdmin: super_Admin,
+    userID: userid,
+    username: userName,
+    groupName: groupname,//groupname, //groupname
+    authorized: confirm,
+    token: toKen,
+    refreshToken: refreshTokens,
+    jobTitle: groupname,
+    pagcor: 'pagcor',
+    payborit: 'payborit',
+  },
+  STAFF_USER: {
+    STAFF: [
+      {
+        'id': 1,
+        'name': 'admin_aly',
+        'username': 'admin_aly',
+        'create_event': 0,
+        'viewing_event_list': 0,
+        'edit_event_status': 0,
+        'create_arena': 0,
+        'viewing_event_fight': 0,
+        'create_user': 0,
+        'create_user_platinum': 0,
+        'approve_direct_player': 1,
+        'approve_all_player': 1,
+        'change_password': 1,
+        'viewing_Users': 1,
+        'viewing_agent_tree': 0,
+        'viewing_player_history': 0,
+        'access_viewing_event_list': 0,
+        'create_announcement': 0,
+        'group': 'STAFF',
+      },
+      {
+        'id': 1,
+        'name': 'admin_louela',
+        'username': 'admin_louela',
+        'create_event': 0,
+        'viewing_event_list': 0,
+        'edit_event_status': 0,
+        'create_arena': 0,
+        'viewing_event_fight': 0,
+        'create_user': 0,
+        'create_user_platinum': 0,
+        'approve_direct_player': 1,
+        'approve_all_player': 1,
+        'change_password': 1,
+        'viewing_Users': 1,
+        'viewing_agent_tree': 0,
+        'viewing_player_history': 0,
+        'access_viewing_event_list': 0,
+        'create_announcement': 0,
+        'group': 'STAFF',
+      },
+      {
+        'id': 6,
+        'name': 'JD',
+        'username': 'Adminapprover1',
+        'create_event': 0,
+        'viewing_event_list': 1,
+        'edit_event_status': 0,
+        'create_arena': 0,
+        'viewing_event_fight': 0,
+        'create_user': 1,
+        'create_user_platinum': 1,
+        'approve_direct_player': 1,
+        'approve_all_player': 0,
+        'change_password': 1,
+        'viewing_Users': 1,
+        'viewing_agent_tree': 1,
+        'viewing_player_history': 0,
+        'access_viewing_event_list': 0,
+        'create_announcement': 0,
+        'group': 'STAFF',
+      }, {
+        'id': 7,
+        'name': 'ADMIN',
+        'username': 'ADMIN',
+        'create_event': 1,
+        'viewing_event_list': 1,
+        'edit_event_status': 1,
+        'create_arena': 1,
+        'viewing_event_fight': 1,
+        'create_user': 1,
+        'create_user_platinum': 0,
+        'approve_direct_player': 0,
+        'approve_all_player': 1,
+        'change_password': 1,
+        'viewing_Users': 1,
+        'viewing_agent_tree': 1,
+        'viewing_player_history': 1,
+        'access_viewing_event_list': 1,
+        'create_announcement': 1,
+        'group': 'SUPER_ADMIN',
+      },{
+        'id': 8,
+        'name': 'JAY ADMIN',
+        'username': 'jay_admin',
+        'create_event': 1,
+        'viewing_event_list': 1,
+        'edit_event_status': 1,
+        'create_arena': 1,
+        'viewing_event_fight': 1,
+        'create_user': 1,
+        'create_user_platinum': 0,
+        'approve_direct_player': 0,
+        'approve_all_player': 1,
+        'change_password': 1,
+        'viewing_Users': 1,
+        'viewing_agent_tree': 1,
+        'viewing_player_history': 1,
+        'access_viewing_event_list': 1,
+        'create_announcement': 1,
+        'group': 'SUPER_ADMIN',
+      },
+    ]
+  },
+  ACCOUNTING_USER: {
+    ACCTG: [
+      {
+        'id': 2,
+        'name': 'IT DEV',
+        'username': 'accounting',
+        'view_dashboard': 1,
+        'company_fund': 1,
+        'create_fund': 1,
+        'histoy_fund': 1,
+        'fund_management': 1,
+        'request_points_view': 1,
+        'request_withdraw_view': 1,
+        'top_up': 1,
+        'withdraw': 1,
+        'withdraw_total': 1,
+        'logs_withdrawal': 1,
+        'payborit': 1,
+        'payborit_dashboard': 1,
+        //'payborit_view':1,
+        'AutocashOut_view': 1,
+        'AutocashIn_view': 1,
+        'pending_autoCashin': 1, //manual_approval_payborit_auto_cashin
+        'roll_back_auto_cash_out': 1,
+        'commission_management': 1,
+        'request_commission': 1,
+        'withdraw_commission': 1,
+        'convert_commission': 1,
+        'report': 1,
+        'income_report': 1,
+        'player_history': 1,
+        'autoCasout_blocking': 1,
+        'block_list': 1,
+        'block_user': 1,
+        'autoCasout_exempted': 1,
+        'exempted_list': 1,
+        'exempted_user': 1,
+        'group': 'ACCOUNTING'
+      },
+      {
+        'id': 2,
+        'name': 'JAY ACCOUNTING',
+        'username': 'jay_accounting',
+        'view_dashboard': 1,
+        'company_fund': 1,
+        'create_fund': 1,
+        'histoy_fund': 1,
+        'fund_management': 1,
+        'request_points_view': 1,
+        'request_withdraw_view': 1,
+        'top_up': 1,
+        'top_up_directPlayer': 1,
+        'withdraw': 1,
+        'withdraw_total': 1,
+        'logs_withdrawal': 1,
+        'payborit': 1,
+        'payborit_dashboard': 1,
+        'AutocashOut_view': 1,
+        'AutocashIn_view': 1,
+        'pending_autoCashin': 1, //manual_approval_payborit_auto_cashin
+        'roll_back_auto_cash_out': 1,
+        'commission_management': 1,
+        'request_commission': 1,
+        'withdraw_commission': 1,
+        'convert_commission': 1,
+        'report': 1,
+        'income_report': 1,
+        'player_history': 1,
+        'autoCasout_blocking': 1,
+        'block_list': 1,
+        'block_user': 1,
+        'autoCasout_exempted': 1,
+        'exempted_list': 1,
+        'exempted_user': 1,
+        'group': 'ACCOUNTING'
+      },
+     
+      {
+        'id': 2,
+        'name': 'Gragasin',
+        'username': 'atty_accounting',
+        'view_dashboard': 1,
+        'company_fund': 1,
+        'create_fund': 1,
+        'histoy_fund': 1,
+        'fund_management': 1,
+        'request_points_view': 1,
+        'request_withdraw_view': 1,
+        'top_up': 1,
+        'top_up_directPlayer': 0,
+        'withdraw': 1,
+        'withdraw_total': 1,
+        'logs_withdrawal': 1,
+        'payborit': 1,
+        'payborit_dashboard': 1,
+        //'payborit_view':1,
+        'AutocashOut_view': 1,
+        'AutocashIn_view': 1,
+        'pending_autoCashin': 1, //manual_approval_payborit_auto_cashin
+        'roll_back_auto_cash_out': 1,
+        'commission_management': 1,
+        'request_commission': 1,
+        'withdraw_commission': 1,
+        'convert_commission': 1,
+        'report': 1,
+        'income_report': 1,
+        'player_history': 1,
+        'autoCasout_blocking': 1,
+        'block_list': 1,
+        'block_user': 1,
+        'autoCasout_exempted': 1,
+        'exempted_list': 1,
+        'exempted_user': 1,
+        'group': 'ACCOUNTING'
+      },
+      {
+        'id': 2,
+        'name': 'Valeen Wong',
+        'username': 'valeenwong',
+        'view_dashboard': 1,
+        'company_fund': 1,
+        'create_fund': 1,
+        'histoy_fund': 1,
+        'fund_management': 1,
+        'request_points_view': 1,
+        'request_withdraw_view': 1,
+        'top_up': 1,
+        'top_up_directPlayer': 0,
+        'withdraw': 1,
+        'withdraw_total': 1,
+        'logs_withdrawal': 1,
+        'payborit': 1,
+        'payborit_dashboard': 1,
+        //'payborit_view':1,
+        'AutocashOut_view': 1,
+        'AutocashIn_view': 1,
+        'pending_autoCashin': 1, //manual_approval_payborit_auto_cashin
+        'roll_back_auto_cash_out': 1,
+        'commission_management': 1,
+        'request_commission': 1,
+        'withdraw_commission': 1,
+        'convert_commission': 1,
+        'report': 1,
+        'income_report': 1,
+        'player_history': 1,
+        'autoCasout_blocking': 1,
+        'block_list': 1,
+        'block_user': 1,
+        'autoCasout_exempted': 1,
+        'exempted_list': 1,
+        'exempted_user': 1,
+        'group': 'ACCOUNTING'
+      },
+     ]
+  },
+
+  copyRight: {
+    footerMessage: 'Copyright ©ez2win.bet V2.0'
+  },
+  background: {
+    theme: "#141b2d",
+  },
+  IMG: {
+    imgURL: 'http://ezybetgame.s3.ap-southeast-1.amazonaws.com/ButtonImage/',
+    imgArena: 'http://ezybetgame.s3.ap-southeast-1.amazonaws.com/ArenaImage/',
+  },
+  table: { 
+    head: '#3e4396', // 3e4396 1f2a40  #1F2A40!important
+  },
+  history: {
+    page: document.referrer,
+  },
+  login: {
+    button: '#e0e0e0',
+  },
+  button_blue: {
+    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 35,
+    padding: '0 10px',
+    boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',//'0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  button_green: {
+    background: '#3f51b5',///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 35,
+    padding: '0 18px',
+    boxShadow: '#252c54 0px 3px 5px 2px',//'0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  button_red: {
+    background: 'linear-gradient(45deg, #dc004e 30%, #e33371 90%)',///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 35,
+    padding: '0 15px',
+    boxShadow: 'rgb(109 8 42) 0px 3px 5px 2px',//'0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  button_orange: {
+    background: 'linear-gradient(45deg, #ff9800 30%, #ffb74d 90%)',///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 35,
+    padding: '0 10px',
+    boxShadow: 'rgb(123 91 1) 0px 3px 5px 2px',//'0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  button_indigo: {
+    background: 'linear-gradient(45deg, #3f51b5 30%, #7986cb 90%)',///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 35,
+    padding: '0 16px',
+    boxShadow: 'rgb(205 210 239) 0px 3px 5px 2px',//'0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  Button_save: {
+    background: 'linear-gradient(45deg, #3f51b5 30%, #3f51b5)',///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    boxShadow: '#252c54 0px 3px 5px 2px',//'0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  Back_button: {
+    background: 'linear-gradient(45deg, rgb(241 171 5) 30%, rgb(245 186 7) 90%)',///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 40,
+    padding: '0 15px',
+    boxShadow: 'rgb(123 91 1) 0px 2px 3px 0px',//'0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+
+  Excel_button: {
+    background: ' linear-gradient(45deg, rgb(12 144 3) 30%, rgb(12 142 2) 90%)',///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 40,
+    padding: '0 15px',
+    boxShadow: 'rgb(123 91 1) 0px 2px 3px 0px',//'0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  Play_button: {
+    background: 'linear-gradient(45deg, rgb(228 4 4) 30%, rgb(228 5 4) 90%)',///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 40,
+    padding: '0 15px',
+    boxShadow: 'rgb(123 91 1) 0px 2px 3px 0px',//'0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  editBacktButton: {
+    background: 'linear-gradient(45deg, rgb(241 171 5) 30%, rgb(245 186 7) 90%)',///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 15px',
+    boxShadow: 'rgb(123 91 1) 0px 2px 3px 0px',//'0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  paginationColor: {
+    color: '#386f50',
+  }
+
+};
+/* console.log("toKen,: ", groupname)  
+background: linear-gradient(0deg, rgb(236 8 8) 0%, rgb(15 67 216) 100%);
+*/
+
+export default Api;

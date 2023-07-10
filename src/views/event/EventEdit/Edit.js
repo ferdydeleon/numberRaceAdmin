@@ -399,7 +399,6 @@ const [listUsername, setlistUsername] = useState([]);
     });
     if (event.target.name === 'isJackpot') {
       setYesJakpot(!yesJackPot);  
-      setButtonLabel(['JACKPOT'])
     } else if (event.target.name === 'isDraw') {
       setYesDraw(!yesDraw);
     } else if (event.target.name === 'button_color') {
@@ -444,10 +443,7 @@ const [listUsername, setlistUsername] = useState([]);
     }
     /// //console.log('addbutton: ', img_url);
     if (form.img_url === null) {
-
-
       let uniqueChars = [...new Set(buttonLabel)];
-
       let jacpotlabel = yesJackPot === true?  `['JACKPOT']`:`[${uniqueChars}]`;
       const ArrayCreateButton = {
         event: id,
@@ -464,13 +460,7 @@ const [listUsername, setlistUsername] = useState([]);
         button_label:  jacpotlabel,
         userId: Api.request.userID
       };
-
-
-
-console.log('yesJackPot: ',yesJackPot)
       console.log('ArrayCreateButton: ',ArrayCreateButton)
-
-
       setLoading(true);
       api
         .post(`${Api.request.URL}/api/v2/Button`, ArrayCreateButton)

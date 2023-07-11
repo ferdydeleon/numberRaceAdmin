@@ -54,25 +54,6 @@ const Toolbar = ({ className, ...rest }) => {
                   variant="h5"
                 // style={{color: "red"}}
                 >Event Income </Typography>
-            {/* <Box maxWidth={500}>
-              <TextField
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon
-                        fontSize="small"
-                        color="action"
-                      >
-                        <SearchIcon />
-                      </SvgIcon>
-                    </InputAdornment>
-                  )
-                }}
-                placeholder="Search customer"
-                variant="outlined"
-              />
-            </Box> */}
           </CardContent>
         </Card>
       </Box>

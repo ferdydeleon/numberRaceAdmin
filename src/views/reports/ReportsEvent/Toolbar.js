@@ -36,8 +36,6 @@ const Toolbar = ({ className, ...rest }) => {
       >
       </Box>
 
-    
-
     </div>
   );
 };

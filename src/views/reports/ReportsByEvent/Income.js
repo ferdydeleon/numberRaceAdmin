@@ -19,28 +19,20 @@ import {
   TextField,
   colors,
 } from "@material-ui/core";
-import api from "../../../axios";
 import Api from "../../../Api";
-// import Dialog from '@material-ui/core/Dialog';
-// import DialogActions from '@material-ui/core/DialogActions';
-// import DialogContent from '@material-ui/core/DialogContent';
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
-// import localStorageService from '../../auth/localStorageService';
-// import MuiAlert from '@material-ui/lab/Alert';
-// import { Search as SearchIcon } from 'react-feather';
 import { useAlert } from "react-alert";
 import PrintIcon from "@material-ui/icons/Print";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ReactExport from "react-data-export";
+import { actualIncome, reportGameList } from "../../../adminModel/reportData";
+import getdate from "../../../utils/date";
+import { fetchgamelist } from "../../../adminModel/data";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-
-// function Alert(props) {
-//   return <MuiAlert elevation={6} variant="filled" {...props} />;
-// }
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,22 +41,9 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
-  avatar: {
-    marginRight: theme.spacing(2),
-  },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: "#fff",
-  },
-  backColor: {
-    backgroundColor: "black",
-    color: "white",
-  },
-  importButton: {
-    marginRight: theme.spacing(1),
-  },
-  exportButton: {
-    marginRight: theme.spacing(1),
   },
   searcH: {
     float: "right",
@@ -81,97 +60,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: Api.paginationColor.color,
     },
   },
-  button_hover_green: {
-    background: "linear-gradient(45deg, #fff 30%, #fff 90%)", ///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    borderRadius: 3,
-    border: 0,
-    color: "#4caf50",
-    height: 35,
-    padding: "0 18px",
-    //boxShadow: 'rgb(183 236 184) 0px 3px 5px 2px',//'0 3px 5px 2px rgba(255, 105, 135, .3)',
-    "&:hover": {
-      background: "linear-gradient(45deg, #4caf50 30%, #81c784 90%)", ///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-      borderRadius: 3,
-      border: 0,
-      color: "white",
-      height: 35,
-      padding: "0 18px",
-      boxShadow: "rgb(31 74 32) 0px 3px 5px 2px", //'0 3px 5px 2px rgba(255, 105, 135, .3)',
-    },
-  },
-  button_hover_blue: {
-    background: "linear-gradient(45deg, #fff 30%, #fff 90%)", ///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    borderRadius: 3,
-    border: 0,
-    color: "#2196F3",
-    height: 35,
-    padding: "0 18px",
-    //boxShadow: 'rgb(183 236 184) 0px 3px 5px 2px',//'0 3px 5px 2px rgba(255, 105, 135, .3)',
-    "&:hover": {
-      background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)", ///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-      borderRadius: 3,
-      border: 0,
-      color: "white",
-      height: 35,
-      padding: "0 10px",
-      boxShadow: "0 3px 5px 2px #0461aa", //'0 3px 5px 2px rgba(255, 105, 135, .3)',
-    },
-  },
-  button_hover_red: {
-    background: "linear-gradient(45deg, #fff 30%, #fff 90%)", ///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    borderRadius: 3,
-    border: 0,
-    color: "#dc004e",
-    height: 35,
-    padding: "0 15px",
-    "&:hover": {
-      background: "linear-gradient(45deg, #dc004e 30%, #e33371 90%)", ///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-      borderRadius: 3,
-      border: 0,
-      color: "white",
-      height: 35,
-      padding: "0 15px",
-      boxShadow: "rgb(109 8 42) 0px 3px 5px 2px", //'0 3px 5px 2px rgba(255, 105, 135, .3)',
-    },
-  },
-  button_hover_orange: {
-    background: "linear-gradient(45deg, #fff 30%, #fff 90%)", ///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    borderRadius: 3,
-    border: 0,
-    color: "#ff9800",
-    height: 35,
-    padding: "0 10px",
-    "&:hover": {
-      background: "linear-gradient(45deg, #ff9800 30%, #ffb74d 90%)", ///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-      borderRadius: 3,
-      border: 0,
-      color: "white",
-      height: 35,
-      padding: "0 10px",
-      boxShadow: "rgb(123 91 1) 0px 3px 5px 2px", //'0 3px 5px 2px rgba(255, 105, 135, .3)',
-    },
-  },
-  button_hover_indigo: {
-    background: "linear-gradient(45deg, #fff 30%, #fff 90%)", ///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    borderRadius: 3,
-    border: 0,
-    color: "#3f51b5",
-    height: 35,
-    padding: "0 16px",
-    "&:hover": {
-      background: "linear-gradient(45deg, #3f51b5 30%, #7986cb 90%)", ///'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-      borderRadius: 3,
-      border: 0,
-      color: "white",
-      height: 35,
-      padding: "0 16px",
-      boxShadow: "rgb(11 28 123) 0px 3px 5px 2px", //'0 3px 5px 2px rgba(255, 105, 135, .3)',
-    },
-  },
-  dialog: {
-    backgroundColor: Api.table.head,
-    color: theme.palette.common.white,
-  },
+
   ExcelButton: {
     backgroundColor: colors.orange[700],
     // minWidth: "100%",
@@ -202,12 +91,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const List = () => {
   const classes = useStyles();
-  // const [ResponseMessage, setResponseMessage] = useState('');
-  // const [game, setGame] = useState('');
-
-  // const [Page, setPage] = useState(0);
   const alert = useAlert();
-
   const [Count, setCout] = useState(0);
   const [disable, setDisAble] = useState(true);
   const [nextdisable, setNextDisAble] = useState(false);
@@ -235,18 +119,12 @@ const List = () => {
   const [backdropopen, setLoading] = useState(false);
   // const [error, setError] = useState(false);
   const [downloads, setDownloads] = useState([]);
+  const [noData, setNoData] = useState("");
 
-  let today = new Date();
-  let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-  let yyyy = today.getFullYear();
-  let dd = String(today.getDate()).padStart(2, "0");
-  //let star = yyyy + '-' + mm + '-' + dd+'T21:00';
-  let star = yyyy + "-" + mm + "-" + dd;
-  let end = yyyy + "-" + mm + "-" + dd;
 
-  const [startingDate, setStarDate] = useState(star);
-  const [endingDate, setEndDate] = useState(end);
-  const [search, setSearch] = useState("");
+  const [startingDate, setStarDate] = useState(getdate.start);
+  const [endingDate, setEndDate] = useState(getdate.end);
+  const [search, setSearch] = useState('');
 
   const handleChange = (event) => {
     if (event.target.name === "startingDate") {
@@ -263,78 +141,64 @@ const List = () => {
   };
 
   const handleClickSearch = () => {
-    return RequestEvent(search, Count, startingDate, endingDate);
+        if(search===''){
+          setSearch(true);
+        }else{
+          return RequestEvent(search, Count, startingDate, endingDate);
+        }
+   
   };
 
-  const RequestEvent = useCallback(async (search, val, startingDate, endingDate) => {
+
+  const RequestEvent = useCallback((search, val, startingDate, endingDate) => {
     setLoading(true);
-    try {
-      await api
-        .get(
-          `${Api.request.URL}/api/v2/report/event/list?game_code=${
-            search === undefined ? "" : search
-          }&start=${val === undefined ? 0 : val}&limit=10&from=${
-            startingDate === undefined ? star : startingDate
-          }&to=${endingDate === undefined ? end : endingDate}`
-        )
-        .then((res) => {
-          // console.log("res:",res.data.data.data)
-          setPosts(res.data.data.data);
-          setNextDisAble(false);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setPosts([]);
-          // console.log("error:",error.response.data.message)
-          alert.error(error.response.data.message);
-          if (error.response.data.message === "NO DATA FOUND") {
-            setNextDisAble(true);
-          } else {
-          }
-          setLoading(false);
-        });
-    } catch (e) {
-      // setResponseMessage(e);
-      console.log(e);
+    async function fetchData() {
+      const results = await actualIncome(search, val, startingDate, endingDate);
+      if (results === "NO DATA FOUND") {
+        setPosts([]);
+        setNoData(results);
+        setNextDisAble(true);
+        setLoading(false);
+      } else {
+        setPosts(results);
+        setNextDisAble(false);
+        setLoading(false);
+      }
     }
-    setLoading(false);
-  }, [end,star,alert]);
+    fetchData().catch(console.error);
+  }, []);
 
   useEffect(() => {
     RequestEvent();
   }, [RequestEvent]);
 
-  const [gameList, setGamelist] = useState([]);
 
+  const [gameList, setGamelist] = useState([]);
   useEffect(() => {
-    api
-      .get(`${Api.request.URL}/api/v2/Game`)
-      .then((res) => {
-        const result = res.data.data.data.filter(
-          (x) => x.isVisible === 1
-        );
-        setGamelist(result);
-      })
-      .catch((error) => {}); ////.
+    async function fetchData() {
+      const getGamelist = await fetchgamelist();
+      setGamelist(getGamelist);
+    }
+    fetchData().catch(console.error);
   }, []);
 
-  
+
   const handleClickDownload = () => {
-    //return getDownload(search, group,paid, status,Count, startingDate, endingDate);
-    api
-      .get(
-        `${Api.request.URL}/api/v2/report/event/list?game_code=${search}&start=0&from=${startingDate}&to=${endingDate}`
-      )
-      .then((res) => {
+    setLoading(true);
+    async function fetchData() {
+      const results = await reportGameList(search,startingDate, endingDate);
+      if (results === "NO DATA FOUND") {
+        alert.error(results);
         setLoading(false);
-        setDownloads(res.data.data.data);
+      } else {
+        setLoading(false);
+        setDownloads(results);
         document.getElementById("downloads").click();
-      })
-      .catch((error) => {
-        alert.error(error.response.data.message);
-        setLoading(false);
-      });
+      }
+    }
+    fetchData().catch(console.error);
   };
+
 
   return (
     <div>
@@ -343,7 +207,7 @@ const List = () => {
           <CardContent>
             <Grid container spacing={2}>
               <Grid item md={2} xs={12}>
-               
+              
                   <TextField
                     fullWidth={true}
                     id="outlined-select-currency"
@@ -353,19 +217,15 @@ const List = () => {
                     name="search"
                     onChange={handleChange}
                     variant="outlined"
+                    required
                   >
-                    {/* <MenuItem key={1} value={'COLOR_GAME'}>COLOR GAME</MenuItem>
-                    <MenuItem key={2} value={'DROP_BALL'}>DROP BALL</MenuItem>
-                    <MenuItem key={3} value={'NBA'}>NBA</MenuItem>
-                    <MenuItem key={4} value={'SABONG'}>SABONG</MenuItem> */}
-
+                    <MenuItem key={0} value={""}>Test</MenuItem>
                     {gameList.map((g, i) => (
-                      <MenuItem key={i} value={g.game_code}>
+                      <MenuItem key={i+1} value={g.game_code}>
                         {g.game_name}
                       </MenuItem>
                     ))}
                   </TextField>
-              
               </Grid>
               <Grid item md={2} xs={12}>
                 <TextField
@@ -578,21 +438,16 @@ const List = () => {
                     );
                     break;
                   default:
-                  // code block
                 }
-
                 return (
                   <StyledTableRow hover key={i}>
                     <StyledTableCell align="left">{i + 1}</StyledTableCell>
                     <StyledTableCell align="left">{GAMECODE}</StyledTableCell>
-                    <StyledTableCell align="left">
-                      {row.created_date.slice(0, 10)} <br></br>{" "}
-                      {row.created_date.slice(11, 19)}
+                    <StyledTableCell align="left"> {row.created_date.slice(0, 10)} <br></br>{row.created_date.slice(11, 19)}
                     </StyledTableCell>
                     <StyledTableCell align="left">
                       {row.event_name}
                     </StyledTableCell>
-
                     <StyledTableCell align="left">{row.status}</StyledTableCell>
                   </StyledTableRow>
                 );
@@ -600,21 +455,13 @@ const List = () => {
             ) : (
               <TableRow>
                 <TableCell key={1} colSpan={12}>
-                  No record found!
+                  {noData}
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
-        {/* <TablePagination
-              rowsPerPageOptions={1}
-              component="div"
-              count={Count}
-              rowsPerPage={Val}
-              page={Page}   
-              onChangePage={handleNextPage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-            /> */}
+        {posts.length === 100 ?
         <Box
           mt={2}
           display="flex"
@@ -630,7 +477,6 @@ const List = () => {
               startIcon={<ArrowBackIosIcon />}
               onClick={handleBackPage}
             >
-              {" "}
             </Button>
             <Button
               className={classes.page}
@@ -638,11 +484,10 @@ const List = () => {
               startIcon={<ArrowForwardIosIcon />}
               onClick={handleNextPage}
             >
-              {" "}
             </Button>
           </Grid>
           {/* <Pagination siblingCount={0}   count={1} className={classes.page} /> */}
-        </Box>
+        </Box> : null}
       </TableContainer>
 
       <Backdrop className={classes.backdrop} open={backdropopen}>

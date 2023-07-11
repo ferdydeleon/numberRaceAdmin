@@ -148,7 +148,6 @@ const App = () => {
   let yyyy = today.getFullYear();
   var firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
   var lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
   let start = yyyy + "-" + mm + "-" + firstDay;
   let end = yyyy + "-" + mm + "-" + lastDay;
 

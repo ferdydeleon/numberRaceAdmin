@@ -20,9 +20,9 @@ export async function actualIncome(search, val, startingDate, endingDate) {
   return response;
 }
 
-export async function reportGameList(startingDate,endingDate) {
+export async function reportGameList(search,startingDate,endingDate) {
   const response = await api
-    .get(`api/v2/report/event/list?game_code=${'NUMBER_RACE'}&start=0&from=${startingDate}&to=${endingDate}`)
+    .get(`api/v2/report/event/list?game_code=${search === undefined ? "" :search}&start=0&from=${startingDate}&to=${endingDate}`)
     .then((res) => {
       return res.data.data.data;
     })
@@ -31,3 +31,5 @@ export async function reportGameList(startingDate,endingDate) {
     });
     return response;
 }
+
+

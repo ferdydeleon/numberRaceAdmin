@@ -49,31 +49,9 @@ const Toolbar = ({ className, ...rest }) => {
       <Box mt={3}>
         <Card>
           <CardContent>
-          <Typography
-                  color="textPrimary"
-                  gutterBottom
-                  variant="h5"
-                // style={{color: "red"}}
-                >Actual Income </Typography>
-            {/* <Box maxWidth={500}>
-              <TextField
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon
-                        fontSize="small"
-                        color="action"
-                      >
-                        <SearchIcon />
-                      </SvgIcon>
-                    </InputAdornment>
-                  )
-                }}
-                placeholder="Search customer"
-                variant="outlined"
-              />
-            </Box> */}
+            <Typography variant="h4">
+            Actual Income 
+            </Typography>
           </CardContent>
         </Card>
       </Box>

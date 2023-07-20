@@ -2,20 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   Box,
-  CardHeader,
   Button,
   TableCell,
   MenuItem,
   Divider,
   Grid,
   TextField,
+  CardHeader,
   Card,
   CardContent,
-  ThemeProvider,
   makeStyles,
   withStyles,
+  CardActions,
 } from "@material-ui/core";
-import { createTheme } from "@material-ui/core/styles";
+import { createTheme,ThemeProvider  } from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
 import api from "../../../axios";
 import Api from "../../../Api";
@@ -30,7 +30,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import Paper from "@material-ui/core/Paper";
 import QueueIcon from "@material-ui/icons/Queue";
-import CardActions from "@material-ui/core/CardActions";
 import Dialog from "@material-ui/core/Dialog";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -277,16 +276,23 @@ const Edit = (props) => {
   const [sequence, setSequence] = useState([]);
   //const [idButton, setGetButtonID] = useState('');
 
+
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const eventData = await fetchEvent(id);
-      setButton(eventData);
-      let Sequence = eventData.map((elem) =>
-        elem.sequence === null ? 0 : elem.sequence
-      );
-      setSequence(Sequence);
-      setLoading(false);
+      const results = await fetchEvent(id);
+      if (results === "NO DATA FOUND") {
+        //console.log(results.length);
+        setButton([]);
+        setLoading(false);
+      } else {
+        let Sequence = results.map((elem) =>
+          elem.sequence === null ? 0 : elem.sequence
+        );
+        setButton(results);
+        setSequence(Sequence);
+        setLoading(false);
+      }
     } catch (e) {
       setLoading(false);
       console.log(e);
@@ -512,7 +518,7 @@ const Edit = (props) => {
         button_label: jacpotlabel,
         userId: Api.request.userID,
       };
-      console.log("ArrayCreateButton: ", ArrayCreateButton);
+      //console.log("ArrayCreateButton: ", ArrayCreateButton);
       setLoading(true);
       api
         .post(`${Api.request.URL}/api/v2/Button`, ArrayCreateButton)
@@ -633,24 +639,24 @@ const Edit = (props) => {
     />
   );
 
-  const IMAGE = (
-    <TextField
-      fullWidth
-      id="filled-select-currency-native"
-      select
-      label="Show Image"
-      margin="normal"
-      name="isImgShow"
-      onChange={handleChange}
-      SelectProps={{
-        native: true,
-      }}
-      variant="outlined"
-    >
-      <option value={0}>No</option>
-      <option value={1}>Yes</option>
-    </TextField>
-  );
+  // const IMAGE = (
+  //   <TextField
+  //     fullWidth
+  //     id="filled-select-currency-native"
+  //     select
+  //     label="Show Image"
+  //     margin="normal"
+  //     name="isImgShow"
+  //     onChange={handleChange}
+  //     SelectProps={{
+  //       native: true,
+  //     }}
+  //     variant="outlined"
+  //   >
+  //     <option value={0}>No</option>
+  //     <option value={1}>Yes</option>
+  //   </TextField>
+  // );
   // ************************************** END Create Button **************************************
 
   // ************************************** Start Default  Button Confirmation **************************************
@@ -756,7 +762,7 @@ const Edit = (props) => {
 
         <Divider />
         <CardContent>
-          <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit}>
             <Grid item xs={12}>
               <TextField
                 disabled={disable}
@@ -927,12 +933,9 @@ const Edit = (props) => {
       </Card>
 
       <Box mt={3}></Box>
-
+ 
       <Card>
         <CardActions>
-          {/* <Button disabled={VALSttus} size="small" color="primary">
-            Button Details
-          </Button> */}
           <Button
             onClick={VALSttus === true ? null : handleClickOpenDefault}
             variant="contained"
@@ -1204,7 +1207,8 @@ const Edit = (props) => {
                 />
               </Grid>
             </Grid>
-            <Grid container spacing={1}>
+            
+            {yesDraw === true ? null :   <Grid container spacing={1}>
               <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
@@ -1224,7 +1228,14 @@ const Edit = (props) => {
                 </TextField>
               </Grid>
 
+  
               <Grid item md={6} xs={12}>
+                {yesJackPot === false ? null : jakcpotPrice}
+              </Grid>
+            </Grid>}
+
+            {yesJackPot === true ? null :   <Grid container spacing={1}>
+            <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
                   select
@@ -1241,18 +1252,14 @@ const Edit = (props) => {
                   <option value={1}>Yes</option>
                 </TextField>
               </Grid>
-
-              <Grid item md={6} xs={12}>
-                {yesJackPot === false ? null : jakcpotPrice}
-              </Grid>
-
               {yesDraw === false ? null : (
                 <Grid item md={6} xs={12}>
                   {drawPrice}
                   {/* {yesDraw ? drawPrice : false} */}
                 </Grid>
               )}
-            </Grid>
+            </Grid>}
+
 
             <Grid container spacing={1}>
               {yesDraw === true ? null : (

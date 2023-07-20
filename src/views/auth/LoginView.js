@@ -281,7 +281,7 @@ const LoginView = () => {
               <img
                 alt="Logo"
                 src="/static/logo140.png"
-                style={{ width: "25%" }}
+                style={{ width: "45%" }}
               />
             </Box>
 

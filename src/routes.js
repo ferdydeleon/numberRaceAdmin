@@ -11,6 +11,13 @@ import EventFight from "src/views/event/EventFight"; //working
 import EventFightBet from "src/views/event/EventFightBet"; //working
 import EventFightHistory from "src/views/event/EventFightHistory"; //working
 
+
+import NewEvent from "src/views/event/Event"; //working
+import EventButton from "src/views/event/Event/ManageButton"; //working
+
+
+
+
 import DashboardView from "src/views/reports/DashboardView"; //working
 import LoginView from "src/views/auth/LoginView"; //working
 import NotFoundView from "src/views/errors/NotFoundView";
@@ -202,7 +209,6 @@ if (Api.request.groupName === "STAFF") {
             path: "account/ma/players/:ref/:user/:type",
             element: <AccountMAPlayers />,
           }, //working
-
           { path: "account", element: <AccountView /> }, //working
           access_create_user === true
             ? { path: "account/create/user", element: <AccountCreateUsers /> }
@@ -236,12 +242,18 @@ if (Api.request.groupName === "STAFF") {
           // { path: 'dashboard', element: <DashboardView /> }, //working
           { path: "event/edit/:id/:status", element: <EventEdit /> }, //working
           { path: "event/list", element: <EventView /> }, //working
+
           access_create_event === true
             ? { path: "event/create", element: <EventCreate /> }
             : "", //working
           { path: "event/deal/:id/:title", element: <EventDeal /> }, //working
-          access_viewing_event_fight === true ? { path: "event/view/", element: <EventFight /> }: "", //working
-          { path: "event/deal/bet/:eventId/:fightId/:title/:fightNo/:win",element: <EventFightBet />}, //working
+          access_viewing_event_fight === true
+            ? { path: "event/view/", element: <EventFight /> }
+            : "", //working
+          {
+            path: "event/deal/bet/:eventId/:fightId/:title/:fightNo/:win",
+            element: <EventFightBet />,
+          }, //working
           {
             path: "event/fight/history/:event/:fightno/:title",
             element: <EventFightHistory />,
@@ -258,11 +270,9 @@ if (Api.request.groupName === "STAFF") {
           { path: "/page/error", element: <NoAccess /> },
           access_create_announcement === true
             ? { path: "announcement/view", element: <Announcement /> }
-            : "", //working
-          // { path: 'dashboard', element: <DashboardView /> }, //working
-          // { path: 'account', element: <AccountView /> },
-
+            : "",
           { path: "*", element: <Navigate to="/page" /> },
+
         ],
       },
 
@@ -454,12 +464,6 @@ if (Api.request.groupName === "STAFF") {
                 element: <ReportPlayersHistory />,
               }
             : "", //working
-
-          // access_pending_autoCashin == true ? { path: '/payborit/cashin/request', element: <PayboritRequest /> } : '', //working
-          // access_roll_back_auto_cash_out == true ? { path: '/payborit/withdraw/request', element: <PayboritWithdrawRequest /> } : '', //working
-          // payborit_dashboard == true ? { path: '/payborit/dashboard', element: <PayboritDashBoard /> } : '', //working
-          // access_AutocashOut_view == true ? { path: '/payborit/autocashout', element: <PayboritAoutocashOut /> } : '', //working
-
           access_block_user === true
             ? { path: "block/view", element: <BlockUser /> }
             : "", //working
@@ -478,13 +482,6 @@ if (Api.request.groupName === "STAFF") {
           { path: "agent/upline/tree/:id/:user", element: <UplineTree /> },
           { path: "account/players", element: <AccountPlayers /> },
 
-          // access_AutocashIn_view === true
-          //   ? { path: "gpt/check-deposit/", element: <GptCheckDeposit /> }
-          //   : "",
-          // access_AutocashOut_view === true
-          //   ? { path: "gpt/check-withdraw/", element: <GptCheckWithdraw /> }
-          //   : "",
-
           { path: "/page/error", element: <NoAccess /> },
           { path: "*", element: <Navigate to="/page" /> },
         ],
@@ -502,12 +499,16 @@ if (Api.request.groupName === "STAFF") {
     ];
   }
 } else {
-  //console.log('ADMINasaaaaa: ', Api.request.groupName);
+  // ADMIN 
   Rat = [
     {
       path: "app",
       element: <DashboardLayout />,
       children: [
+        { path: "/event/list/view", element: <NewEvent /> },
+        { path: "event/button/:buttonID/", element: <EventButton /> }, //working
+
+
         { path: "agent/downline/tree/:id/:user", element: <DownlineTree /> },
         { path: "agent/upline/tree/:id/:user", element: <UplineTree /> }, //workingaccount/agent/tree/2/jm_platinum
         { path: "dashboard", element: <DashboardView /> }, //working
@@ -516,8 +517,10 @@ if (Api.request.groupName === "STAFF") {
         { path: "event/create", element: <EventCreate /> }, //working
         { path: "event/deal/:id/:title", element: <EventDeal /> }, //working
         { path: "event/view/", element: <EventFight /> }, //working
-        { path: "event/deal/bet/:eventId/:fightId/:title/:fightNo/:win",element: <EventFightBet />}, //working
-
+        {
+          path: "event/deal/bet/:eventId/:fightId/:title/:fightNo/:win",
+          element: <EventFightBet />,
+        }, //working
         {
           path: "event/fight/history/:event/:fightno/:title",
           element: <EventFightHistory />,
@@ -527,6 +530,7 @@ if (Api.request.groupName === "STAFF") {
           path: "account/ma/players/:ref/:user/:type",
           element: <AccountMAPlayers />,
         }, //working
+
 
         { path: "account", element: <AccountView /> }, //working
         { path: "account/create/user", element: <AccountCreateUsers /> }, ////working
@@ -564,11 +568,6 @@ if (Api.request.groupName === "STAFF") {
           element: <ReportsEvent />,
         }, //working
         { path: "/reports/player/history", element: <ReportPlayersHistory /> }, //working
-        //super
-        // { path: '/super/platinum/view', element: <SuperPlatinumView/> }, //working
-        // { path: '/super/platinum/tagging/:id/:superPlatinum', element: <ViewTagging /> }, //working
-        // { path: "/page/error", element: <NoAccess /> },
-        // { path: "*", element: <Navigate to="/page" /> },
       ],
     },
     {

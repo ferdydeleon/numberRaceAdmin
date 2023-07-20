@@ -63,8 +63,6 @@ const useStyles = makeStyles((theme) => ({
 
   ExcelButton: {
     backgroundColor: colors.orange[700],
-    // minWidth: "100%",
-    // minHeight: "100%",
     color: "white",
     "&:hover": {
       backgroundColor: colors.orange[800],
@@ -120,7 +118,6 @@ const List = () => {
   // const [error, setError] = useState(false);
   const [downloads, setDownloads] = useState([]);
   const [noData, setNoData] = useState("");
-
 
   const [startingDate, setStarDate] = useState(getdate.start);
   const [endingDate, setEndDate] = useState(getdate.end);

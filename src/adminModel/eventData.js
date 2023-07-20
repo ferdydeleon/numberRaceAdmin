@@ -97,3 +97,29 @@ export async function eventFightHistory(event, fightno) {
     });
   return response;
 }
+
+export async function findEventByID(eventID) {
+  const response = await api
+    .get(`${Api.request.URL}/api/v2/event/${eventID}`)
+    .then((res) => {
+      return res.data.data.data;
+    })
+    .catch((error) => {
+      return error.response.data.message;
+    });
+  return response;
+}
+
+
+export async function deleteButton(arrayData) {
+  const response = await api
+    .post(`${Api.request.URL}/api/v2/Button/delete/`,arrayData)
+    .then((res) => {
+      return res.data.message;
+    })
+    .catch((error) => {
+      return error.response.data.message;
+    });
+  return response;
+}
+

@@ -14,7 +14,6 @@ export async function fetchgamelist() {
   return response;
 }
 
-
 export async function fetchdeclaratorList() {
   const response = await api
     .get(`${Api.request.URL}/api/v2/Users?group=ADMIN&start=0`)

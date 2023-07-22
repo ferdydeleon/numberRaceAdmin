@@ -111,9 +111,46 @@ export async function findEventByID(eventID) {
 }
 
 
+export async function getAssignedDeclarator(eventID) {
+  const response = await api
+    .get(`${Api.request.URL}/api/v2/Event/assign/user/${eventID}`)
+    .then((res) => {
+      return res.data.data.data;
+    })
+    .catch((error) => {
+      return error.response.data.message;
+    });
+  return response;
+}
+
+export async function postAssigned(arrayData) {
+  const response = await api
+    .post(`${Api.request.URL}/api/v2/Event/user/assign/`,arrayData)
+    .then((res) => {
+      return res.data.message;
+    })
+    .catch((error) => {
+      return error.response.data.message;
+    });
+  return response;
+}
+
+
 export async function deleteButton(arrayData) {
   const response = await api
     .post(`${Api.request.URL}/api/v2/Button/delete/`,arrayData)
+    .then((res) => {
+      return res.data.message;
+    })
+    .catch((error) => {
+      return error.response.data.message;
+    });
+  return response;
+}
+
+export async function updateEvent(arrayData) {
+  const response = await api
+    .post(`${Api.request.URL}/api/v2/Event`,arrayData)
     .then((res) => {
       return res.data.message;
     })

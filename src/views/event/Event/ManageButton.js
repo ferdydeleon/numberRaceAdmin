@@ -14,18 +14,18 @@ import {
   TableRow,
   Container,
   Box,
+  Backdrop,
+  CircularProgress,
 } from "@material-ui/core";
 import Page from "src/components/Page";
 import { fetchEvent } from "../../../adminModel/data";
 import { deleteButton } from "../../../adminModel/eventData";
-
 import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
 import QueueIcon from "@material-ui/icons/Queue";
 import Color from "../../../utils/colors";
 import CreateButton from "./CreateButton";
 import { useAlert } from "react-alert";
 import Api from "../../../Api";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     minWidth: 650,
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
   },
 }));
 
@@ -62,6 +66,7 @@ function ManageButton() {
   var { buttonID } = useParams();
   const [listButton, setButton] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [sequence, setSequence] = useState([]);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -71,6 +76,10 @@ function ManageButton() {
         setButton([]);
         setLoading(false);
       } else {
+        let Sequence = results.map((elem) =>
+        elem.sequence === null ? 0 : elem.sequence
+      );
+      setSequence(Sequence);
         setButton(results);
         setLoading(false);
       }
@@ -87,12 +96,12 @@ function ManageButton() {
   const [openForm, setOpenForm] = useState(false);
   const handleClickOpenDialog = () => {
     setOpenForm(!openForm);
-    if(openForm === true){
-      fetchData()
+    if (openForm === true) {
+      // fetchData()
     }
   };
 
-  const handleRemoveButton = (e,buttonId) => {
+  const handleRemoveButton = (e, buttonId) => {
     e.preventDefault();
     async function fetchDataDelete() {
       const ArrayDelete = {
@@ -103,7 +112,7 @@ function ManageButton() {
       const results = await deleteButton(ArrayDelete);
       alert.success(results);
       setLoading(false);
-       fetchData();
+      fetchData();
     }
     fetchDataDelete().catch(console.error);
   };
@@ -139,21 +148,22 @@ function ManageButton() {
                       <Button
                         variant="contained"
                         style={{
+                          color: Color.green,
                           background: row.button_color,
-                          boxShadow: "#bfbfc9 0px 2px 2px 1px",
+                          boxShadow: "#bfbfc9 0px 1px 1px 1px",
                         }}
                       >
                         {row.button_name}
                       </Button>
                     </StyledTableCell>
                     <StyledTableCell align="left">
-                        <Button
-                          variant="contained"
-                          startIcon={<DeleteForeverRoundedIcon />}
-                          onClick={(e) => handleRemoveButton(e, row.id)}
-                        >
-                          Remove
-                        </Button>
+                      <Button
+                        variant="contained"
+                        startIcon={<DeleteForeverRoundedIcon />}
+                        onClick={(e) => handleRemoveButton(e, row.id)}
+                      >
+                        Remove
+                      </Button>
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
@@ -166,7 +176,12 @@ function ManageButton() {
         status={openForm}
         handleClose={handleClickOpenDialog}
         buttonID={buttonID}
+        sequence={sequence}
       />
+
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Page>
   );
 }

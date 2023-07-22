@@ -14,7 +14,7 @@ import EventFightHistory from "src/views/event/EventFightHistory"; //working
 
 import NewEvent from "src/views/event/Event"; //working
 import EventButton from "src/views/event/Event/ManageButton"; //working
-
+import EventAssignedDeclarator from "src/views/event/Event/ManageAssigned"; //working
 
 
 
@@ -507,7 +507,8 @@ if (Api.request.groupName === "STAFF") {
       children: [
         { path: "/event/list/view", element: <NewEvent /> },
         { path: "event/button/:buttonID/", element: <EventButton /> }, //working
-
+        { path: "event/assigned/declarator/:assignedID/", element: <EventAssignedDeclarator /> }, //working
+        
 
         { path: "agent/downline/tree/:id/:user", element: <DownlineTree /> },
         { path: "agent/upline/tree/:id/:user", element: <UplineTree /> }, //workingaccount/agent/tree/2/jm_platinum

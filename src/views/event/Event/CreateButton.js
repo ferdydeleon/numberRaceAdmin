@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   Button,
@@ -12,12 +12,13 @@ import {
   Typography,
   Box,
   CardContent,
+  // Backdrop,
+  //CircularProgress,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import Color from "../../../utils/colors";
 import Api from "../../../Api";
-import { fetchEvent } from "../../../adminModel/data";
 import api from "../../../axios";
 import { useAlert } from "react-alert";
 const useStyles = makeStyles((theme) => ({
@@ -29,21 +30,26 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     flex: 1,
   },
+  // backdrop: {
+  //   zIndex: theme.zIndex.drawer + 1,
+  //   color: "#fff",
+  // },
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function CreateButton({ status, handleClose, buttonID }) {
+function CreateButton({ status, handleClose, buttonID,sequence}) {
   const classes = useStyles();
   const alert = useAlert();
   const [yesJackPot, setYesJakpot] = React.useState(false);
   const [yesDraw, setYesDraw] = React.useState(false);
-  const [sequence, setSequence] = useState([]);
+
   const [colorButton, setColorButton] = useState("");
   const [buttonName, setButtonName] = useState("");
   const [buttonLabel, setButtonLabel] = React.useState([]);
+  //const [loading, setLoading] = useState(false);
 
   const [form, setValues] = useState({
     event: "",
@@ -59,29 +65,39 @@ function CreateButton({ status, handleClose, buttonID }) {
     userId: Api.request.userID,
   });
 
-  const fetchData = useCallback(async () => {
-    //setLoading(true);
-    try {
-      const results = await fetchEvent(buttonID);
-      if (results === "NO DATA FOUND") {
-        console.log(results.length);
-        //setLoading(false);
-      } else {
-        let Sequence = results.map((elem) =>
-          elem.sequence === null ? 0 : elem.sequence
-        );
-        setSequence(Sequence);
-        //setLoading(false);
-      }
-    } catch (e) {
-      //setLoading(false);
-      console.log(e);
-    }
-  }, [buttonID]);
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+
+  const BALALALA = (value) => {
+    switch (value.toUpperCase()) {
+      case "RED":
+        setButtonName("RED_JACKPOT");
+        setButtonLabel("RED JACKPOT");
+        break;
+      case "BLUE":
+        setButtonName("BLUE_JACKPOT");
+        setButtonLabel("BLUE JACKPOT");
+        break;
+      case "GREEN":
+        setButtonName("GREEN_JACKPOT");
+        setButtonLabel("GREEN JACKPOT");
+        break;
+      case "YELLOW":
+        setButtonName("YELLOW_JACKPOT");
+        setButtonLabel("YELLOW JACKPOT");
+        break;
+      case "PINK":
+        setButtonName("PINK_JACKPOT");
+        setButtonLabel("PINK JACKPOT");
+        break;
+      case "WHITE":
+        setButtonName("WHITE_JACKPOT");
+        setButtonLabel("WHITE JACKPOT");
+        break;
+      default:
+        setButtonName("");
+        setButtonLabel([]);
+    }
+  };
 
   const handleChange = (event) => {
     setValues({
@@ -91,37 +107,8 @@ function CreateButton({ status, handleClose, buttonID }) {
 
     if (event.target.name === "isJackpot") {
       setYesJakpot(!yesJackPot);
-      console.log(!yesJackPot);
       if (event.target.value === "1") {
-        switch (colorButton.toUpperCase()) {
-          case "RED":
-            setButtonName("RED_JACKPOT");
-            setButtonLabel("RED JACKPOT");
-            break;
-          case "BLUE":
-            setButtonName("BLUE_JACKPOT");
-            setButtonLabel("BLUE JACKPOT");
-            break;
-          case "GREEN":
-            setButtonName("GREEN_JACKPOT");
-            setButtonLabel("GREEN JACKPOT");
-            break;
-          case "YELLOW":
-            setButtonName("YELLOW_JACKPOT");
-            setButtonLabel("YELLOW JACKPOT");
-            break;
-          case "PINK":
-            setButtonName("PINK_JACKPOT");
-            setButtonLabel("PINK JACKPOT");
-            break;
-          case "WHITE":
-            setButtonName("WHITE_JACKPOT");
-            setButtonLabel("WHITE JACKPOT");
-            break;
-          default:
-            setButtonName("");
-            setButtonLabel([]);
-        }
+        BALALALA(event.target.value);
       } else {
         setButtonName("");
         setButtonLabel([]);
@@ -130,35 +117,7 @@ function CreateButton({ status, handleClose, buttonID }) {
       setYesDraw(!yesDraw);
     } else if (event.target.name === "button_color") {
       if (yesJackPot === true) {
-        switch (event.target.value.toUpperCase()) {
-          case "RED":
-            setButtonName("RED_JACKPOT");
-            setButtonLabel("RED JACKPOT");
-            break;
-          case "BLUE":
-            setButtonName("BLUE_JACKPOT");
-            setButtonLabel("BLUE JACKPOT");
-            break;
-          case "GREEN":
-            setButtonName("GREEN_JACKPOT");
-            setButtonLabel("GREEN JACKPOT");
-            break;
-          case "YELLOW":
-            setButtonName("YELLOW_JACKPOT");
-            setButtonLabel("YELLOW JACKPOT");
-            break;
-          case "PINK":
-            setButtonName("PINK_JACKPOT");
-            setButtonLabel("PINK JACKPOT");
-            break;
-          case "WHITE":
-            setButtonName("WHITE_JACKPOT");
-            setButtonLabel("WHITE JACKPOT");
-            break;
-          default:
-            setButtonName("");
-            setButtonLabel([]);
-        }
+        BALALALA(event.target.value);
       } else {
         setButtonName("");
         setButtonLabel([]);
@@ -171,6 +130,7 @@ function CreateButton({ status, handleClose, buttonID }) {
 
   const handleFormSubmitCreateButton = (e) => {
     e.preventDefault();
+
     let sequenceNo;
     if (form.sequence === "") {
       sequenceNo = "0";
@@ -182,38 +142,37 @@ function CreateButton({ status, handleClose, buttonID }) {
     let jacpotlabel =
       yesJackPot === true ? `['${buttonLabel}']` : `[${uniqueChars}]`;
 
-     const ArrayCreateButton = {
-        event: buttonID,
-        button_color: colorButton,
-        button_name: buttonName.toLocaleUpperCase(),
-        isJackpot: form.isJackpot,
-        jackpot_price: form.jackpot_price,
-        isDraw: form.isDraw,
-        draw_price: form.draw_price,
-        img_url: "",
-        isImgShow: form.isImgShow,
-        comission: form.comission,
-        sequence: sequenceNo,
-        button_label: jacpotlabel,
-        userId: Api.request.userID,
-      };
-      //setLoading(true);
-      api
-        .post(`${Api.request.URL}/api/v2/Button`, ArrayCreateButton)
-        .then((res) => {
-          setYesJakpot("");
-          setYesDraw("");
-          handleClose()
-          //setLoading(false);
-          alert.success(res.data.message);
-        })
-        .catch((error) => {
-          alert.error(error.response.data.message);
-          setYesJakpot("");
-          setYesDraw("");
-         // setLoading(false);
-        });
-
+    const ArrayCreateButton = {
+      event: buttonID,
+      button_color: colorButton,
+      button_name: buttonName.toLocaleUpperCase(),
+      isJackpot: form.isJackpot,
+      jackpot_price: form.jackpot_price,
+      isDraw: form.isDraw,
+      draw_price: form.draw_price,
+      img_url: "",
+      isImgShow: form.isImgShow,
+      comission: form.comission,
+      sequence: sequenceNo,
+      button_label: jacpotlabel,
+      userId: Api.request.userID,
+    };
+    //setLoading(true);
+    api
+      .post(`${Api.request.URL}/api/v2/Button`, ArrayCreateButton)
+      .then((res) => {
+        setYesJakpot("");
+        setYesDraw("");
+        handleClose();
+        //setLoading(false);
+        alert.success(res.data.message);
+      })
+      .catch((error) => {
+        alert.error(error.response.data.message);
+        setYesJakpot("");
+        setYesDraw("");
+        // setLoading(false);
+      });
   };
 
   const jakcpotPrice = (
@@ -411,6 +370,9 @@ function CreateButton({ status, handleClose, buttonID }) {
           </form>
         </CardContent>
       </Dialog>
+      {/* <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop> */}
     </div>
   );
 }

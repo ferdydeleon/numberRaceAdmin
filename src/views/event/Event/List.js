@@ -19,13 +19,13 @@ import {
   InputAdornment,
   SvgIcon,
   CardHeader,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  CircularProgress,
+  Backdrop,
 } from "@material-ui/core";
 import Api from "../../../Api";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import Backdrop from "@material-ui/core/Backdrop";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { Search as SearchIcon } from "react-feather";
 import { useAlert } from "react-alert";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
@@ -33,6 +33,7 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { fetchgamelist } from "../../../adminModel/data";
 import { eventChangeStatus, eventList } from "src/adminModel/eventData";
 import Edit from "./Edit";
+import Color from "../../../utils/colors";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -44,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     color: "#fff",
   },
-
   container: {
     maxHeight: 500,
   },
@@ -142,6 +142,7 @@ const List = () => {
   const [eventID, setEventID] = React.useState(false);
   const [EventSTATUS, setStatus] = React.useState("");
 
+
   const handleChangeStatus = (e, id, status) => {
     setOpenChangeStatus(true);
     setStatus(status);
@@ -190,10 +191,14 @@ const List = () => {
 
   const [openModalEdit, setOpenModalEdit] = React.useState(false);
   const [eventpassID, setEventPassID] = React.useState("");
+  
   const HandleOpenUpdate = (id) => {
     setOpenModalEdit(!openModalEdit);
     setEventPassID(id);
   };
+
+
+
   return (
     <div>
       <Dialog
@@ -256,7 +261,6 @@ const List = () => {
                 onChange={handleSelectGame}
                 variant="outlined"
               >
-                {/* <MenuItem value={"ALL"}>ALL</MenuItem> */}
                 {gameList.map((g, i) => (
                   <MenuItem key={i} value={g.game_name}>
                     {g.game_name}
@@ -347,8 +351,8 @@ const List = () => {
                         variant="contained"
                         size="small"
                         className={classes.importButton}
+                        style={{backgroundColor:Color.buttonGreen,color:Color.white}}
                         onClick={() => HandleOpenUpdate(row.id)}
-                        // href={`/app/event/edit/${row.id}/${row.STATUS}`}
                       >
                         Edit
                       </Button>
@@ -356,7 +360,8 @@ const List = () => {
                         variant="contained"
                         size="small"
                         className={classes.importButton}
-                        //href={`/app/event/button/${row.id}`}
+                        style={{backgroundColor:Color.buttonGreen,color:Color.white}}
+                        href={`/app/event/assigned/declarator/${row.id}`}
                       >
                         Assigned
                       </Button>
@@ -365,6 +370,7 @@ const List = () => {
                         variant="contained"
                         size="small"
                         className={classes.importButton}
+                        style={{backgroundColor:Color.buttonGreen,color:Color.white}}
                         href={`/app/event/button/${row.id}`}
                       >
                         Manage Button
@@ -420,6 +426,8 @@ const List = () => {
         handleClose={HandleOpenUpdate}
         eventID={eventpassID}
       />
+
+
     </div>
   );
 };

@@ -1,5 +1,6 @@
 const color = {
     green: "#4cceac",
+    buttonGreen: "#3da58a",
     red: "#ee0707",
     blue: "#0c62b3",
     orange: '#ffa500',

@@ -20,6 +20,8 @@ import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useAlert } from "react-alert";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import {PlayerType} from "../../../adminModel/data";
+
 const useStyles = makeStyles((theme) => ({
   root: {},
   backdrop: {
@@ -146,7 +148,6 @@ const Password = ({ className, ...rest }) => {
           //GROUP = 2;
         }
 
-
         const ArrayAddUser = {
           type: TYPEGROUP,
           ip_address: ip_address,
@@ -176,6 +177,7 @@ const Password = ({ className, ...rest }) => {
       }
     } // end else if wrong input wrong number
   };
+
 
   const Updatepending = Api.STAFF_USER.STAFF.filter(
     (item) => item.username === Api.request.username
@@ -227,15 +229,9 @@ const Password = ({ className, ...rest }) => {
                   onChange={handleChange}
                   variant="outlined"
                 >
-                  <MenuItem></MenuItem>
-                  <MenuItem value={"SUPER_ADMIN"}>{"SUPER_ADMIN"}</MenuItem>
-                  <MenuItem value={"PLATINUM"}>{"PLATINUM"}</MenuItem>
-                  <MenuItem value={"DECLARATOR"}>{"DECLARATOR"}</MenuItem>
-                  <MenuItem value={"STAFF"}>{"STAFF"}</MenuItem>
-                  <MenuItem value={"ACCOUNTING"}>{"ACCOUNTING"}</MenuItem>
-                  <MenuItem value={"SUPER_PLATINUM"}>
-                    {"SUPER PLATINUM"}
-                  </MenuItem>
+                  {PlayerType.map((val) => (
+                    <MenuItem value={val.value}>{val.type}</MenuItem>
+                  ))}
                 </TextField>
               )}
             </Grid>
@@ -337,8 +333,7 @@ const Password = ({ className, ...rest }) => {
                 variant="outlined"
               />
             </Grid>
-
-            <Grid item md={6} xs={12}>
+            {/* <Grid item md={6} xs={12}>
               <TextField
                 required
                 fullWidth
@@ -350,7 +345,7 @@ const Password = ({ className, ...rest }) => {
                 value={values.fb}
                 variant="outlined"
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         </CardContent>
         <Divider />

@@ -5,9 +5,14 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Divider, Grid, CardContent } from "@material-ui/core";
-import { findEventByID } from "../../../adminModel/eventData";
+import { findEventByID,updateEvent } from "../../../adminModel/eventData";
+import { useAlert } from "react-alert";
+import Api from "../../../Api";
 
 function Edit({ status, handleClose, eventID }) {
+
+  const alert = useAlert();
+
   const [EventName, setEventName] = useState("");
   const [GameID, setGameType] = useState(0);
   const [GameName, setGameName] = useState("");
@@ -19,7 +24,7 @@ function Edit({ status, handleClose, eventID }) {
   const [maxBet, setMaxBet] = useState("");
   //const [EventImage, setEventImage] = useState(null);
   //const [EventImageName, setEventNameImage] = useState(null);
-  // const [betmaxtype, setBetMaxType] = useState("");
+   const [betmaxtype, setBetMaxType] = useState("");
 
   useEffect(() => {
     if (status !== false) {
@@ -42,23 +47,53 @@ function Edit({ status, handleClose, eventID }) {
           setCompany(row.company);
           setMinBet(row.minBet);
           setMaxBet(row.maxBet);
-          //setBetMaxType(row.bet_max_type);
+          setBetMaxType(row.bet_max_type);
         }
       }
       fetchData().catch(console.error);
     }
   }, [eventID, status]);
 
+
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    //setLoading(true);
+    async function fetchDataDelete() {
+      const ArrayEvent = {
+        id: eventID,
+        userId: Api.request.userID,
+        gameType: GameID,
+        arenaId: ArenaID,
+        eventName: EventName,
+        img_url: "",
+        minBet: minBet,
+        maxBet: maxBet,
+        max_bet_type: betmaxtype,
+        // bet_max_type:
+      };
+      const results = await updateEvent(ArrayEvent);
+      //setLoading(false);
+      handleClose()
+      alert.success(results)
+    }
+    fetchDataDelete().catch(console.error);
+
+  };
+
+
   return (
     <div>
       <Dialog
+     
         open={status}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Update Event</DialogTitle>
+        <DialogTitle id="form-dialog-title">Details</DialogTitle>
+        <Divider/>
         <CardContent>
-          <form>
+          <form onSubmit={handleFormSubmit}>
             <Grid item xs={12}>
               <TextField
                 fullWidth={true}
@@ -168,11 +203,11 @@ function Edit({ status, handleClose, eventID }) {
             </Grid>
             <Divider />
             <DialogActions>
-              <Button variant="contained" onClick={handleClose}>
+              <Button color="primary" variant="contained" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="contained" type="submit">
-                Update details
+              <Button color="primary"  variant="contained" type="submit">
+                Update
               </Button>
             </DialogActions>
           </form>

@@ -20,7 +20,6 @@ import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import QueuePlayNextIcon from "@material-ui/icons/QueuePlayNext";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 
-
 const useStyles = makeStyles((theme) => ({
   item: {
     display: "flex",
@@ -54,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiListItemIcon-root": {
       color: "white",
     },
-
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -75,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
     color: "#088c3f",
     //088c3f
   },
-
 }));
 
 export default function NavItem() {
@@ -96,7 +93,6 @@ export default function NavItem() {
     window.location.href = "/";
   };
 
-
   return (
     <List
       component="nav"
@@ -108,7 +104,7 @@ export default function NavItem() {
       // }
       className={classes.root}
     >
-      <ListItem  button onClick={ClickEvent}>
+      <ListItem button onClick={ClickEvent}>
         <ListItemIcon>
           <EventIcon />
         </ListItemIcon>
@@ -127,7 +123,8 @@ export default function NavItem() {
             className={classes.nested}
             activeClassName={classes.active}
             component={RouterLink}
-            to="/app/event/list"
+            //to="/app/event/list"
+            to="/app/event/list/view"
           >
             <ListItemIcon>
               <ViewListIcon />

@@ -10,7 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import api from "../../../axios";
-import DialogContentText from "@material-ui/core/DialogContentText";
+// import DialogContentText from "@material-ui/core/DialogContentText";
 import Api from "../../../Api";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -39,7 +39,9 @@ import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useCallback } from "react";
-import Color from '../../../utils/colors'
+import Color from "../../../utils/colors";
+import { typePlayer } from "../../../adminModel/data";
+
 /* import ReactHTMLTableToExcel from 'react-html-table-to-excel'; */
 
 const useRowStyles = makeStyles((theme) => ({
@@ -116,17 +118,12 @@ const APplayers = () => {
   const [error, setError] = useState(false);
   const [UserName, setUsername] = useState("");
   const [UserNameID, setUsernameID] = useState(false);
-  // const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
 
   const [user_ID, setuser_ID] = useState("");
   const [openActive, setOpenActive] = React.useState(false);
-  const [openBooster, setOpenBooster] = React.useState(false);
-
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const [password, setPassword] = useState("");
-
   const handleClickSearchDate = () => {
     let START_C = 0;
     return RequestUsers(UserName, playerType, START_C);
@@ -175,50 +172,42 @@ const APplayers = () => {
     setOpenActive(true);
     setuser_ID(id);
   };
-  const [openBoosterID, setOpenBoosterUserID] = React.useState("");
 
-  const handleClickTagBooster = (e, id) => {
-    setOpenBooster(true);
-    setOpenBoosterUserID(id);
-  };
 
-  const handleClicktagAsbooster = () => {
-    setLoading(true);
-    const ArrayBooster = {
-      userId: openBoosterID,
-      playerId: Api.request.userID,
-    };
-
-    // const ArrayEditUsers = {
-    //   id: user_ID,
-    //   active: value,
-    //   userId: 1,
-    // };
-    //console.log(ArrayEditUsers)
-
-    api
-      .post(`${Api.request.URL}/api/v2/Users/booster/tag`, ArrayBooster)
-      .then((res) => {
-        setOpenBooster(false);
-        const sample = getUsers.findIndex((item) => item.id === openBoosterID);
-        const newArena1 = getUsers;
-        newArena1[sample].isBooster = "BOOSTER";
-        alert.success(res.data.data);
-        setLoading(false);
-        // alert.success(res.data.data);
-      })
-      .catch((error) => {
-        if (error.message === "Network Error") {
-          alert.error(error.message);
-          setOpenBooster(false);
-          setLoading(false);
-        } else {
-          alert.error(error.response.data.message);
-          setOpenBooster(false);
-          setLoading(false);
-        }
-      });
-  };
+  // const [openBoosterID, setOpenBoosterUserID] = React.useState("");
+  // const handleClickTagBooster = (e, id) => {
+  //   setOpenBooster(true);
+  //   setOpenBoosterUserID(id);
+  // };
+  // const handleClicktagAsbooster = () => {
+  //   setLoading(true);
+  //   const ArrayBooster = {
+  //     userId: openBoosterID,
+  //     playerId: Api.request.userID,
+  //   };
+  //   api
+  //     .post(`${Api.request.URL}/api/v2/Users/booster/tag`, ArrayBooster)
+  //     .then((res) => {
+  //       setOpenBooster(false);
+  //       const sample = getUsers.findIndex((item) => item.id === openBoosterID);
+  //       const newArena1 = getUsers;
+  //       newArena1[sample].isBooster = "BOOSTER";
+  //       alert.success(res.data.data);
+  //       setLoading(false);
+  //       // alert.success(res.data.data);
+  //     })
+  //     .catch((error) => {
+  //       if (error.message === "Network Error") {
+  //         alert.error(error.message);
+  //         setOpenBooster(false);
+  //         setLoading(false);
+  //       } else {
+  //         alert.error(error.response.data.message);
+  //         setOpenBooster(false);
+  //         setLoading(false);
+  //       }
+  //     });
+  // };
 
   const handleClickPassword = (e, id) => {
     setOpenChangePassword(true);
@@ -298,9 +287,7 @@ const APplayers = () => {
   }, [RequestUsers]);
 
   const handleClose = () => {
-    setOpenBooster(false);
     setOpenActive(false);
-    //  setViewAgent(false);
     setOpenChangePassword(false);
   };
 
@@ -388,12 +375,6 @@ const APplayers = () => {
       });
   };
 
-  // const [viewAgent, setViewAgent] = React.useState(false);
-  // const [infoAgent, setInfoAgent] = React.useState([]);
-  // const [agentUsername, setUsername] = useState('');
-  // const [agentFirstName, setUsername] = useState('');
-  // const [agentLastName, setUsername] = useState('');
-
   const [paymentDetails, setPaymentDetails] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [typeId, settypeId] = useState("");
@@ -434,22 +415,6 @@ const APplayers = () => {
     setOccupation(occupation);
     setPaymentDetails(true);
   };
-  // const handleClickView = (e, id) => {
-  //   //let fullName = fname + ' ' + lname;
-  //  // console.log('Username1 : ', id);
-  //   api.get(`${Api.request.URL}/users/agent/info/${id}`).then(res => {
-  //     setInfoAgent(res.data.DATA);
-  //     res.data.DATA.map(row => {
-  //       setAgentUsername(row.username);
-  //       setAgentFirstName(row.first_name);
-  //       setAgentLastName(row.last_name);
-  //       setAgentPhone(row.phone);
-  //       setAgentEmail(row.email);
-  //       setAgentRecode(row.refcode);
-  //     });
-  //     setViewAgent(true);
-  //   });
-  // };
 
   const handleCloseAppove = () => {
     setPaymentDetails(false);
@@ -594,21 +559,9 @@ const APplayers = () => {
                   onChange={handleChangeEEE}
                   variant="outlined"
                 >
-                  <MenuItem key={1} value={"ALL"}>
-                    All
-                  </MenuItem>
-                  <MenuItem key={2} value={"PLATINUM"}>
-                    PLATINUM
-                  </MenuItem>
-                  <MenuItem key={3} value={"AGENT"}>
-                    AGENT
-                  </MenuItem>
-                  <MenuItem key={4} value={"DIRECT_PLAYER"}>
-                    DIRECT_PLAYER
-                  </MenuItem>
-                  <MenuItem key={5} value={"ADMIN"}>
-                    ADMIN USER
-                  </MenuItem>
+                  {typePlayer.map((val) => (
+                    <MenuItem value={val.value}>{val.type}</MenuItem>
+                  ))}
                 </TextField>
               </Grid>
             )}
@@ -650,17 +603,16 @@ const APplayers = () => {
                 <StyledTableCell align="center">Username</StyledTableCell>
                 <StyledTableCell align="center">Phone Number</StyledTableCell>
                 <StyledTableCell align="right">Points</StyledTableCell>
-                <StyledTableCell align="right">Commision</StyledTableCell>
-
+                {/* <StyledTableCell align="right">Commision</StyledTableCell> */}
                 <StyledTableCell align="center">Status</StyledTableCell>
-                {Api.request.username === "admin_aly" ||
+                {/* {Api.request.username === "admin_aly" ||
                 Api.request.username === "admin_louela" ? (
                   ""
                 ) : (
                   <StyledTableCell align="center">
                     Tag as Booster
                   </StyledTableCell>
-                )}
+                )} */}
                 {access_change_password === true ? (
                   <StyledTableCell align="center">Action</StyledTableCell>
                 ) : (
@@ -707,7 +659,6 @@ const APplayers = () => {
                   //  let approvalAdmin;
                   let GROUP;
                   let change_password;
-
                   if (row.group_name === "PLATINUM") {
                     GROUP = (
                       <Typography
@@ -718,7 +669,8 @@ const APplayers = () => {
                           fontSize: "12px",
                         }}
                       >
-                        {row.group_name}
+                      {'TELLER'}
+                        {/* {row.group_name} */}
                       </Typography>
                     );
                     //approveFOrplayers = (<StyledTableCell align="center">{STATUS}</StyledTableCell>);
@@ -886,43 +838,12 @@ const APplayers = () => {
                       );
                   }
 
-                  let TAG;
-                  if (row.group_name === "PLATINUM") {
-                    if (row.isBooster === "BOOSTER") {
-                      TAG = (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          size="small"
-                          className={classes.importButton}
-                        >
-                          booster
-                        </Button>
-                      );
-                    } else {
-                      TAG = (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          size="small"
-                          className={classes.importButton}
-                          onClick={(e) => handleClickTagBooster(e, row.id)}
-                        >
-                          Tag as booster
-                        </Button>
-                      );
-                    }
-                  } else {
-                  }
-
                   return (
                     <StyledTableRow key={i + 1}>
-                      <StyledTableCell align="left">
-                        {row.id}
-                      </StyledTableCell>
+                      <StyledTableCell align="left">{row.id}</StyledTableCell>
                       <StyledTableCell align="left">
                         <Button
-                          style={{color:Color.tableTextColor}}
+                          style={{ color: Color.tableTextColor }}
                           onClick={(e) =>
                             handleClickViewPayment(
                               e,
@@ -956,11 +877,11 @@ const APplayers = () => {
                           ? "0"
                           : row.playing_points.toLocaleString()}
                       </StyledTableCell>
-                      <StyledTableCell align="right" style={{ color: "red" }}>
+                      {/* <StyledTableCell align="right" style={{ color: "red" }}>
                         {row.comission_points === null
                           ? "0"
                           : row.comission_points.toLocaleString()}
-                      </StyledTableCell>
+                      </StyledTableCell> */}
 
                       {access_approve_direct_player === true ? (
                         approveFOrplayers
@@ -971,12 +892,12 @@ const APplayers = () => {
                             : STATUSNAME}
                         </StyledTableCell>
                       )}
-                      {Api.request.username === "admin_aly" ||
+                      {/* {Api.request.username === "admin_aly" ||
                       Api.request.username === "admin_louela" ? (
                         ""
                       ) : (
                         <StyledTableCell align="center">{TAG}</StyledTableCell>
-                      )}
+                      )} */}
 
                       {access_change_password === true ? (
                         <StyledTableCell align="center">
@@ -1040,21 +961,17 @@ const APplayers = () => {
                   disabled={disable}
                   startIcon={<ArrowBackIosIcon />}
                   onClick={handleBackPage}
-                >
-                </Button>
+                ></Button>
                 <Button
                   className={classes.page}
                   disabled={nextdisable}
                   startIcon={<ArrowForwardIosIcon />}
                   onClick={handleNextPage}
-                >
-                </Button>
+                ></Button>
               </Grid>
               {/* <Pagination siblingCount={0}   count={1} className={classes.page} /> */}
             </Box>
-          ) : (
-            null
-          )}
+          ) : null}
         </TableContainer>
       </Paper>
 
@@ -1120,31 +1037,6 @@ const APplayers = () => {
         </form>
       </Dialog>
 
-      <Dialog
-        open={openBooster}
-        fullWidth={true}
-        maxWidth={"xs"}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <CardHeader
-          style={{ backgroundColor: "#eb3349", color: "white" }}
-          title="Tag As Booster"
-        />
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want this player tag as booster?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClicktagAsbooster} color="primary">
-            Yes
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
 
       {/*************************************************** * Pag Active ng Players  ****************************************/}
 

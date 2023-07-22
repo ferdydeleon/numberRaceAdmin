@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import { useParams } from "react-router-dom";
 import {
   Box,
@@ -15,7 +15,7 @@ import {
   withStyles,
   CardActions,
 } from "@material-ui/core";
-import { createTheme,ThemeProvider  } from "@material-ui/core/styles";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
 import api from "../../../axios";
 import Api from "../../../Api";
@@ -47,7 +47,7 @@ import Color from "../../../utils/colors";
 // import { Refresh } from '@material-ui/icons';
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { fetchdeclaratorList, fetchEvent } from "../../../adminModel/data";
-import { useCallback } from "react";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -275,7 +275,6 @@ const Edit = (props) => {
   const [listButton, setButton] = useState([]);
   const [sequence, setSequence] = useState([]);
   //const [idButton, setGetButtonID] = useState('');
-
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -762,7 +761,7 @@ const Edit = (props) => {
 
         <Divider />
         <CardContent>
-        <form onSubmit={handleFormSubmit}>
+          <form onSubmit={handleFormSubmit}>
             <Grid item xs={12}>
               <TextField
                 disabled={disable}
@@ -933,7 +932,7 @@ const Edit = (props) => {
       </Card>
 
       <Box mt={3}></Box>
- 
+
       <Card>
         <CardActions>
           <Button
@@ -1099,7 +1098,6 @@ const Edit = (props) => {
         aria-labelledby="form-dialog-title"
       >
         <CardHeader className={classes.dialog} title="Assigned Declarator" />
-
         <form onSubmit={handleFormAssigned}>
           <DialogContent>
             <TextField
@@ -1202,64 +1200,66 @@ const Edit = (props) => {
                   name="button_name"
                   value={buttonName}
                   type="text"
-                  onChange={(e)=> setButtonName(e.target.value)}
+                  onChange={(e) => setButtonName(e.target.value)}
                   variant="outlined"
                 />
               </Grid>
             </Grid>
-            
-            {yesDraw === true ? null :   <Grid container spacing={1}>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  id="filled-select-currency-native"
-                  select
-                  margin="normal"
-                  label="Jackpot"
-                  name="isJackpot"
-                  onChange={handleChange}
-                  SelectProps={{
-                    native: true,
-                  }}
-                  variant="outlined"
-                >
-                  <option value={0}>No</option>
-                  <option value={1}>Yes</option>
-                </TextField>
-              </Grid>
 
-  
-              <Grid item md={6} xs={12}>
-                {yesJackPot === false ? null : jakcpotPrice}
-              </Grid>
-            </Grid>}
-
-            {yesJackPot === true ? null :   <Grid container spacing={1}>
-            <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  select
-                  label="Draw"
-                  margin="normal"
-                  name="isDraw"
-                  onChange={handleChange}
-                  SelectProps={{
-                    native: true,
-                  }}
-                  variant="outlined"
-                >
-                  <option value={0}>No</option>
-                  <option value={1}>Yes</option>
-                </TextField>
-              </Grid>
-              {yesDraw === false ? null : (
+            {yesDraw === true ? null : (
+              <Grid container spacing={1}>
                 <Grid item md={6} xs={12}>
-                  {drawPrice}
-                  {/* {yesDraw ? drawPrice : false} */}
+                  <TextField
+                    fullWidth
+                    id="filled-select-currency-native"
+                    select
+                    margin="normal"
+                    label="Jackpot"
+                    name="isJackpot"
+                    onChange={handleChange}
+                    SelectProps={{
+                      native: true,
+                    }}
+                    variant="outlined"
+                  >
+                    <option value={0}>No</option>
+                    <option value={1}>Yes</option>
+                  </TextField>
                 </Grid>
-              )}
-            </Grid>}
 
+                <Grid item md={6} xs={12}>
+                  {yesJackPot === false ? null : jakcpotPrice}
+                </Grid>
+              </Grid>
+            )}
+
+            {yesJackPot === true ? null : (
+              <Grid container spacing={1}>
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    fullWidth
+                    select
+                    label="Draw"
+                    margin="normal"
+                    name="isDraw"
+                    onChange={handleChange}
+                    SelectProps={{
+                      native: true,
+                    }}
+                    variant="outlined"
+                  >
+                    <option value={0}>No</option>
+                    <option value={1}>Yes</option>
+                  </TextField>
+                </Grid>
+                {yesDraw === false ? null : (
+                  <Grid item md={6} xs={12}>
+                    {drawPrice}
+                    {/* {yesDraw ? drawPrice : false} */}
+                  </Grid>
+                )}
+              </Grid>
+            )}
 
             <Grid container spacing={1}>
               {yesDraw === true ? null : (

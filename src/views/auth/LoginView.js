@@ -210,8 +210,7 @@ const LoginView = () => {
             localStorageService.setItem("auth_user", user);
             switch (UserInfo.name) {
               case "SUPER_ADMIN":
-
-                window.location.href = "/app/event/list";
+                window.location.href = "/app/event/list/view";
                 break;
               case "ACCOUNTING":
                 window.location.href = "/app/reports/actual/income";

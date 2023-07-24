@@ -26,6 +26,7 @@ import Color from "../../../utils/colors";
 import CreateButton from "./CreateButton";
 import { useAlert } from "react-alert";
 import Api from "../../../Api";
+import DefaultButton from "./DefaultButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,9 +78,9 @@ function ManageButton() {
         setLoading(false);
       } else {
         let Sequence = results.map((elem) =>
-        elem.sequence === null ? 0 : elem.sequence
-      );
-      setSequence(Sequence);
+          elem.sequence === null ? 0 : elem.sequence
+        );
+        setSequence(Sequence);
         setButton(results);
         setLoading(false);
       }
@@ -100,6 +101,20 @@ function ManageButton() {
       // fetchData()
     }
   };
+
+
+
+  const [openDefault, setOpenDefault] = useState(false);
+
+
+  const handleClickOpenDialog1 = () => {
+    setOpenDefault(!openDefault);
+    if (openDefault === true) {
+      // fetchData()
+    }
+  };
+
+
 
   const handleRemoveButton = (e, buttonId) => {
     e.preventDefault();
@@ -123,6 +138,13 @@ function ManageButton() {
         <Box mt={3}>
           <Card>
             <CardActions>
+              <Button
+                onClick={handleClickOpenDialog1}
+                variant="contained"
+                color="primary"
+              >
+                Default Button
+              </Button>
               <Button
                 variant="contained"
                 color="primary"
@@ -177,6 +199,13 @@ function ManageButton() {
         handleClose={handleClickOpenDialog}
         buttonID={buttonID}
         sequence={sequence}
+      />
+
+      <DefaultButton
+        status={openDefault}
+        handleClose={handleClickOpenDialog1}
+        gameID={buttonID}
+
       />
 
       <Backdrop className={classes.backdrop} open={loading}>

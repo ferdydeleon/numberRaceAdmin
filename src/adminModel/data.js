@@ -16,7 +16,7 @@ export async function fetchgamelist() {
 
 export async function fetchdeclaratorList() {
   const response = await api
-    .get(`${Api.request.URL}/api/v2/Users?group=ADMIN&start=0`)
+    .get(`${Api.request.URL}/api/v2/Users?group=ADMIN&start=0`) 
     .then((res) => {
       const result = res.data.data.data.filter(
         (x) => x.group_name === "DECLARATOR"
@@ -42,6 +42,21 @@ export async function fetchEvent(id) {
     });
   return response;
 }
+
+
+export async function fetchDefultButton(GameID) {
+  const response = await api
+    .get(`${Api.request.URL}/api/v2/Button/default/${GameID}`)
+    .then((res) => {
+      return res.data.data.data;
+    })
+    .catch((error) => {
+      return error.response.data.message;
+    });
+  return response;
+}
+
+
 
 export async function fetchdrawList() {
   const response = await api

@@ -506,7 +506,7 @@ if (Api.request.groupName === "STAFF") {
       element: <DashboardLayout />,
       children: [
         { path: "/event/list/view", element: <NewEvent /> },
-        { path: "event/button/:buttonID/", element: <EventButton /> }, //working
+        { path: "event/button/:buttonID/:gameType", element: <EventButton /> }, //working
         { path: "event/assigned/declarator/:assignedID/", element: <EventAssignedDeclarator /> }, //working
         
 

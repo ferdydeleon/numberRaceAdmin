@@ -64,7 +64,7 @@ const StyledTableRow = withStyles((theme) => ({
 function ManageButton() {
   const classes = useStyles();
   const alert = useAlert();
-  var { buttonID } = useParams();
+  var { buttonID,gameType } = useParams();
   const [listButton, setButton] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sequence, setSequence] = useState([]);
@@ -205,7 +205,8 @@ function ManageButton() {
         status={openDefault}
         handleClose={handleClickOpenDialog1}
         gameID={buttonID}
-
+        gameType={gameType}
+        
       />
 
       <Backdrop className={classes.backdrop} open={loading}>

@@ -86,7 +86,22 @@ export async function searchUser(search) {
       return error.response.data.message;
     });
   return response;
+} 
+
+
+export async function insertDefaultButton(data){
+  const response = await api
+    .post(`${Api.request.URL}/api/v2/Button/default/`, data)
+    .then((res) => {
+      return res.data.message;
+    })
+    .catch((error) => {
+      console.log("searchUser: ", error.response.data);
+      return error.response.data.message;
+    });
+  return response;
 }
+
 
 export const GameStatus = [
   {

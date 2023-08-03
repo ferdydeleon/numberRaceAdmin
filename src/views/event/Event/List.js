@@ -122,6 +122,7 @@ const List = () => {
     setLoading(true);
     async function fetchData() {
       const results = await eventList(search, game, val);
+      console.log('results: ',results)
       if (results === "NO DATA FOUND") {
         setPosts([]);
         setLoading(false);
@@ -371,7 +372,7 @@ const List = () => {
                         size="small"
                         className={classes.importButton}
                         style={{backgroundColor:Color.buttonGreen,color:Color.white}}
-                        href={`/app/event/button/${row.id}`}
+                        href={`/app/event/button/${row.id}/${row.game_type}`}
                       >
                         Manage Button
                       </Button>
